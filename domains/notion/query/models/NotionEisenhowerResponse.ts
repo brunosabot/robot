@@ -13,10 +13,10 @@ export default interface NotionEisenhowerResponse {
         type: "date";
         date: null;
       };
-      Status: {
+      Eisenhower: {
         id: string;
-        type: "select";
-        select: {
+        type: "status";
+        status: {
           id: string;
           name: string;
           color: string;

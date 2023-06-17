@@ -23,11 +23,14 @@ export default class CountUrgentTasksRoute {
       database_id: req.params.id,
       filter: {
         or: [
-          { property: "Status", select: { equals: "1. Important/Urgent" } },
-          { property: "Status", select: { equals: "2. Pas important/Urgent" } },
+          { property: "Eisenhower", status: { equals: "1. Important/Urgent" } },
+          {
+            property: "Eisenhower",
+            status: { equals: "2. Pas important/Urgent" },
+          },
         ],
       },
-      sorts: [{ property: "Status", direction: "ascending" }],
+      sorts: [{ property: "Eisenhower", direction: "ascending" }],
     });
 
     return {
