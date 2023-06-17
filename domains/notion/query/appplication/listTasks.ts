@@ -25,26 +25,32 @@ export default class ListTasksRoute {
       database_id: req.params.id,
       filter: {
         or: [
-          { property: "Status", select: { equals: "0. Entrant" } },
-          { property: "Status", select: { equals: "1. Important/Urgent" } },
-          { property: "Status", select: { equals: "2. Pas important/Urgent" } },
-          { property: "Status", select: { equals: "3. Important/Pas urgent" } },
+          { property: "Eisenhower", select: { equals: "0. Entrant" } },
+          { property: "Eisenhower", select: { equals: "1. Important/Urgent" } },
           {
-            property: "Status",
+            property: "Eisenhower",
+            select: { equals: "2. Pas important/Urgent" },
+          },
+          {
+            property: "Eisenhower",
+            select: { equals: "3. Important/Pas urgent" },
+          },
+          {
+            property: "Eisenhower",
             select: { equals: "4. Pas important/Pas urgent" },
           },
         ],
       },
-      sorts: [{ property: "Status", direction: "ascending" }],
+      sorts: [{ property: "Eisenhower", direction: "ascending" }],
     });
 
     return (response as unknown as NotionEisenhowerResponse).results
       .map((result: any) => {
-        const { Status, Name } = result.properties;
+        const { Eisenhower, Name } = result.properties;
 
         const task: ITask = {
-          priority: +Status.select.name.replace(/\..*/, ""),
-          status: Status.select.name.replace(/^[0-9]+\. /, ""),
+          priority: +Eisenhower.select.name.replace(/\..*/, ""),
+          status: Eisenhower.select.name.replace(/^[0-9]+\. /, ""),
           name: Name.title[0].plain_text,
         };
 
