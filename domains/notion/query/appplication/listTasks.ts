@@ -25,19 +25,19 @@ export default class ListTasksRoute {
       database_id: req.params.id,
       filter: {
         or: [
-          { property: "Eisenhower", select: { equals: "0. Entrant" } },
-          { property: "Eisenhower", select: { equals: "1. Important/Urgent" } },
+          { property: "Eisenhower", status: { equals: "0. Entrant" } },
+          { property: "Eisenhower", status: { equals: "1. Important/Urgent" } },
           {
             property: "Eisenhower",
-            select: { equals: "2. Pas important/Urgent" },
+            status: { equals: "2. Pas important/Urgent" },
           },
           {
             property: "Eisenhower",
-            select: { equals: "3. Important/Pas urgent" },
+            status: { equals: "3. Important/Pas urgent" },
           },
           {
             property: "Eisenhower",
-            select: { equals: "4. Pas important/Pas urgent" },
+            status: { equals: "4. Pas important/Pas urgent" },
           },
         ],
       },
@@ -49,8 +49,8 @@ export default class ListTasksRoute {
         const { Eisenhower, Name } = result.properties;
 
         const task: ITask = {
-          priority: +Eisenhower.select.name.replace(/\..*/, ""),
-          status: Eisenhower.select.name.replace(/^[0-9]+\. /, ""),
+          priority: +Eisenhower.status.name.replace(/\..*/, ""),
+          status: Eisenhower.status.name.replace(/^[0-9]+\. /, ""),
           name: Name.title[0].plain_text,
         };
 
