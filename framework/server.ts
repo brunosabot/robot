@@ -27,7 +27,7 @@ export default class Server {
     });
 
     try {
-      await fastify.listen(options.fastify.port);
+      await fastify.listen({ host: "127.0.0.1", port: options.fastify.port });
     } catch (err) {
       fastify.log.error(err);
       process.exit(1);
