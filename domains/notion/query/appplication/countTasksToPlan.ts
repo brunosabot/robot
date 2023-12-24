@@ -22,7 +22,7 @@ export default class CountTasksToPlanRoute {
     const response = await notion.databases.query({
       database_id: req.params.id,
       filter: {
-        or: [{ property: "Eisenhower", status: { equals: "Qualify" } }],
+        or: [{ property: "Eisenhower", select: { equals: "Qualify" } }],
       },
       sorts: [{ property: "Eisenhower", direction: "ascending" }],
     });

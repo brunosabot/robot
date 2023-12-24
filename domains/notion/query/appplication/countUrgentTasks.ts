@@ -23,10 +23,10 @@ export default class CountUrgentTasksRoute {
       database_id: req.params.id,
       filter: {
         or: [
-          { property: "Eisenhower", status: { equals: "Important/Urgent" } },
+          { property: "Eisenhower", select: { equals: "Important/Urgent" } },
           {
             property: "Eisenhower",
-            status: { equals: "Not important/Urgent" },
+            select: { equals: "Not important/Urgent" },
           },
         ],
       },

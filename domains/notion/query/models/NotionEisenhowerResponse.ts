@@ -15,8 +15,8 @@ export default interface NotionEisenhowerResponse {
       };
       Eisenhower: {
         id: string;
-        type: "status";
-        status: {
+        type: "select";
+        select: {
           id: string;
           name: string;
           color: string;

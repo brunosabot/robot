@@ -19,19 +19,19 @@ export default class ListTasksRoute {
       database_id: req.params.id,
       filter: {
         or: [
-          { property: "Eisenhower", status: { equals: "Qualify" } },
-          { property: "Eisenhower", status: { equals: "Important/Urgent" } },
+          { property: "Eisenhower", select: { equals: "Qualify" } },
+          { property: "Eisenhower", select: { equals: "Important/Urgent" } },
           {
             property: "Eisenhower",
-            status: { equals: "Not important/Urgent" },
+            select: { equals: "Not important/Urgent" },
           },
           {
             property: "Eisenhower",
-            status: { equals: "Important/Not urgent" },
+            select: { equals: "Important/Not urgent" },
           },
           {
             property: "Eisenhower",
-            status: { equals: "Not important/Not urgent" },
+            select: { equals: "Not important/Not urgent" },
           },
         ],
       },
@@ -40,7 +40,7 @@ export default class ListTasksRoute {
 
     return (response as unknown as NotionEisenhowerResponse).results
       .map((result) =>
-        result.properties.Eisenhower.status.name.replace(/^[0-9]+\. /, "")
+        result.properties.Eisenhower.select.name.replace(/^[0-9]+\. /, "")
       )
       .reduce((acc: Record<string, number>, value: string) => {
         acc[value] = acc[value] ?? 0;

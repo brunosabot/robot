@@ -25,19 +25,19 @@ export default class ListTasksRoute {
       database_id: req.params.id,
       filter: {
         or: [
-          { property: "Eisenhower", status: { equals: "Qualify" } },
-          { property: "Eisenhower", status: { equals: "Important/Urgent" } },
+          { property: "Eisenhower", select: { equals: "Qualify" } },
+          { property: "Eisenhower", select: { equals: "Important/Urgent" } },
           {
             property: "Eisenhower",
-            status: { equals: "Not important/Urgent" },
+            select: { equals: "Not important/Urgent" },
           },
           {
             property: "Eisenhower",
-            status: { equals: "Important/Not urgent" },
+            select: { equals: "Important/Not urgent" },
           },
           {
             property: "Eisenhower",
-            status: { equals: "Not important/Not urgent" },
+            select: { equals: "Not important/Not urgent" },
           },
         ],
       },
@@ -48,9 +48,19 @@ export default class ListTasksRoute {
       .map((result: any) => {
         const { Eisenhower, Name } = result.properties;
 
+        const priorities = {
+          Qualify: 0,
+          "Important/Urgent": 1,
+          "Not important/Urgent": 2,
+          "Important/Not urgent": 3,
+          "Not important/Not urgent": 4,
+        };
+
+        const name = Eisenhower.select.name as keyof typeof priorities;
+
         const task: ITask = {
-          priority: +Eisenhower.status.name.replace(/\..*/, ""),
-          status: Eisenhower.status.name.replace(/^[0-9]+\. /, ""),
+          priority: priorities[name],
+          status: name,
           name: Name.title[0].plain_text,
         };
 
