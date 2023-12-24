@@ -25,19 +25,19 @@ export default class ListTasksRoute {
       database_id: req.params.id,
       filter: {
         or: [
-          { property: "Eisenhower", status: { equals: "0. Entrant" } },
-          { property: "Eisenhower", status: { equals: "1. Important/Urgent" } },
+          { property: "Eisenhower", status: { equals: "Qualify" } },
+          { property: "Eisenhower", status: { equals: "Important/Urgent" } },
           {
             property: "Eisenhower",
-            status: { equals: "2. Pas important/Urgent" },
+            status: { equals: "Not important/Urgent" },
           },
           {
             property: "Eisenhower",
-            status: { equals: "3. Important/Pas urgent" },
+            status: { equals: "Important/Not urgent" },
           },
           {
             property: "Eisenhower",
-            status: { equals: "4. Pas important/Pas urgent" },
+            status: { equals: "Not important/Not urgent" },
           },
         ],
       },
