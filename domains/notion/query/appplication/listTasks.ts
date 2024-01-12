@@ -24,20 +24,39 @@ export default class ListTasksRoute {
     const response = await notion.databases.query({
       database_id: req.params.id,
       filter: {
-        or: [
-          { property: "Eisenhower", select: { equals: "Qualify" } },
-          { property: "Eisenhower", select: { equals: "Important/Urgent" } },
+        and: [
           {
-            property: "Eisenhower",
-            select: { equals: "Not important/Urgent" },
+            or: [
+              {
+                property: "Status",
+                status: { equals: "Not started" },
+              },
+              {
+                property: "Status",
+                status: { equals: "In progress" },
+              },
+            ],
           },
           {
-            property: "Eisenhower",
-            select: { equals: "Important/Not urgent" },
-          },
-          {
-            property: "Eisenhower",
-            select: { equals: "Not important/Not urgent" },
+            or: [
+              { property: "Eisenhower", select: { equals: "Qualify" } },
+              {
+                property: "Eisenhower",
+                select: { equals: "Important/Urgent" },
+              },
+              {
+                property: "Eisenhower",
+                select: { equals: "Not important/Urgent" },
+              },
+              {
+                property: "Eisenhower",
+                select: { equals: "Important/Not urgent" },
+              },
+              {
+                property: "Eisenhower",
+                select: { equals: "Not important/Not urgent" },
+              },
+            ],
           },
         ],
       },

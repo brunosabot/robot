@@ -22,11 +22,30 @@ export default class CountUrgentTasksRoute {
     const response = await notion.databases.query({
       database_id: req.params.id,
       filter: {
-        or: [
-          { property: "Eisenhower", select: { equals: "Important/Urgent" } },
+        and: [
           {
-            property: "Eisenhower",
-            select: { equals: "Not important/Urgent" },
+            or: [
+              {
+                property: "Status",
+                status: { equals: "Not started" },
+              },
+              {
+                property: "Status",
+                status: { equals: "In progress" },
+              },
+            ],
+          },
+          {
+            or: [
+              {
+                property: "Eisenhower",
+                select: { equals: "Important/Urgent" },
+              },
+              {
+                property: "Eisenhower",
+                select: { equals: "Not important/Urgent" },
+              },
+            ],
           },
         ],
       },
